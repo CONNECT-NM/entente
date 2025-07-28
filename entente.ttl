@@ -1,0 +1,151 @@
+@prefix : <https://w3cid.org/entente#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://w3cid.org/entente#> .
+
+<https://w3cid.org/entente> rdf:type owl:Ontology ;
+                             owl:imports <https://w3id.org/emmo/emmo-lite/0.0.5> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://w3cid.org/entente#hasManufacturer
+:hasManufacturer rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf <https://w3id.org/emmo/emmo-for-humans#coexistsWith> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://w3cid.org/entente#grainSize
+:grainSize rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf :materialsData ;
+           rdfs:range xsd:float ;
+           rdfs:comment "The size of the grains in the microstructure, expressed in μm-"@en .
+
+
+###  https://w3cid.org/entente#heatNumber
+:heatNumber rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :heatTreatmentData .
+
+
+###  https://w3cid.org/entente#heatTreatmentData
+:heatTreatmentData rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :HeatTreatment .
+
+
+###  https://w3cid.org/entente#manufacturerID
+:manufacturerID rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:comment "The wikidata ID of a manufacturer"@en .
+
+
+###  https://w3cid.org/entente#massFraction
+:massFraction rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  https://w3cid.org/entente#materialsData
+:materialsData rdf:type owl:DatatypeProperty ;
+               rdfs:domain :StainlessSteel .
+
+
+###  https://w3cid.org/entente#materialsSpecifications
+:materialsSpecifications rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf :materialsData ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "A name specifying the material type following a standard nomenclature. The enumeration of possible values are managed by the ENTENTE interface."@en .
+
+
+###  https://w3cid.org/entente#microstructureType
+:microstructureType rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf :materialsData ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "The microstructure type expressed as one of these values: 'ferrite', 'cementite', 'austenite', 'pearlite', 'upper bainite', 'lower bainite', 'martensite'. The enumeration of possible values is managed by the ENTENTE interface."@en .
+
+
+###  https://w3cid.org/entente#productForm
+:productForm rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:comment "The form of the product whose material is tested. The enumeration of possible values are managed by the ENTENTE interface."@en .
+
+
+###  https://w3cid.org/entente#runNumber
+:runNumber rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf :heatTreatmentData .
+
+
+###  https://w3cid.org/entente#speciesName
+:speciesName rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://w3cid.org/entente#Austenitizing
+:Austenitizing rdf:type owl:Class ;
+               rdfs:subClassOf :HeatTreatment .
+
+
+###  https://w3cid.org/entente#Duration
+:Duration rdf:type owl:Class ;
+          rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Property> ;
+          <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_0adabf6f_7404_44cb_9f65_32d83d8101a3> .
+
+
+###  https://w3cid.org/entente#HeatTreatment
+:HeatTreatment rdf:type owl:Class ;
+               rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Process> .
+
+
+###  https://w3cid.org/entente#Manufacturer
+:Manufacturer rdf:type owl:Class ;
+              rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Agent> ;
+              <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_c0afb341_7d31_4883_a307_ae4606df2a1b> .
+
+
+###  https://w3cid.org/entente#Normalizing
+:Normalizing rdf:type owl:Class ;
+             rdfs:subClassOf :HeatTreatment .
+
+
+###  https://w3cid.org/entente#PostWeldStressRelieving
+:PostWeldStressRelieving rdf:type owl:Class ;
+                         rdfs:subClassOf :HeatTreatment .
+
+
+###  https://w3cid.org/entente#PostWeldment
+:PostWeldment rdf:type owl:Class ;
+              rdfs:subClassOf :HeatTreatment .
+
+
+###  https://w3cid.org/entente#SingleComponentComposition
+:SingleComponentComposition rdf:type owl:Class ;
+                            rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Property> ;
+                            <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_172e2c96_180b_40f8_a3e7_b624471f40c2> .
+
+
+###  https://w3cid.org/entente#StainlessSteel
+:StainlessSteel rdf:type owl:Class ;
+                rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Material> .
+
+
+###  https://w3cid.org/entente#StressRelief
+:StressRelief rdf:type owl:Class ;
+              rdfs:subClassOf :HeatTreatment .
+
+
+###  https://w3cid.org/entente#Tempering
+:Tempering rdf:type owl:Class ;
+           rdfs:subClassOf :HeatTreatment .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
