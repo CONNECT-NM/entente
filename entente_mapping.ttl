@@ -1,0 +1,448 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix hume: <https://w3cid.org/emmo/emmo-for-humans#humanlabels> .
+@prefix elite: <https://w3cid.org/emmo/emmo-for-humans#humanlabels> .
+@prefix entente: <https://w3cid.org/entente#> .
+@base <https://w3cid.org/entente#> .
+
+
+#########################################################################
+############################ PROJECT ####################################
+#########################################################################
+
+<#ProjectTM>
+    rr:logicalTable [ rr:tableName "project"; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/project/{acronym}";
+        rr:class entente:Project;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:title;
+        rr:objectMap [ rr:column "title" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:url;
+        rr:objectMap [ rr:column "url" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:acronym;
+        rr:objectMap [ rr:column "acronym" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:column "remarks" ];
+    ].
+
+
+#########################################################################
+############################ CITATION ####################################
+#########################################################################
+
+<#CitationTM>
+    rr:logicalTable [ rr:tableName "citation"; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/citation/{citation_id}";
+        rr:class entente:Citation;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:title;
+        rr:objectMap [ rr:column "title" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:authors;
+        rr:objectMap [ rr:column "authors" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:citation_type;
+        rr:objectMap [ rr:column "citation_type" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:journal_or_conference;
+        rr:objectMap [ rr:column "journal_or_conference" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:publisher;
+        rr:objectMap [ rr:column "publisher" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:publication_date;
+        rr:objectMap [ rr:column "publication_date"; rr:datatype xsd:date];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:issn_isbn;
+        rr:objectMap [ rr:column "issn_isbn" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:url;
+        rr:objectMap [ rr:column "url" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:doi;
+        rr:objectMap [ rr:column "doi" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:column "remarks" ];
+    ].
+
+
+#########################################################################
+############################ IRRADIATION FACILITY #######################
+#########################################################################
+
+<#IrradiationFacilityTM>
+    rr:logicalTable [ rr:tableName "irradiation_facility"; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/irradiation_facility/{irradiation_facility_id}";
+        rr:class entente:IrradiationFacility;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:name;
+        rr:objectMap [ rr:column "irradiation_facility_name" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:irradiation_facility_type;
+        rr:objectMap [ rr:column "irradiation_facility_type" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:reactor_type;
+        rr:objectMap [ rr:column "reactor_type" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:country;
+        rr:objectMap [ rr:column "country" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:designer;
+        rr:objectMap [ rr:column "designer" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:vessel_manufacturer;
+        rr:objectMap [ rr:column "vessel_manufacturer" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:began_operation_date;
+        rr:objectMap [ rr:column "began_operation_date"; rr:datatype xsd:date ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:ceased_operation_date;
+        rr:objectMap [ rr:column "ceased_operation_date"; rr:datatype xsd:date ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:column "remarks" ];
+    ].
+
+#########################################################################
+############################ IRRADIATION SET ############################
+#########################################################################
+
+<#IrradiationSetTM>
+    rr:logicalTable [ rr:tableName "irradiation_set"; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/irradiation_set/{irradiation_set_id}";
+        rr:class entente:IrradiationFacility;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:name;
+        rr:objectMap [ rr:column "irradiation_set_name" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:efpy;
+        rr:objectMap [ rr:column "efpy"; rr:datatype xsd:decimal ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:lead_factor;
+        rr:objectMap [ rr:column "lead_factor"; rr:datatype xsd:decimal; ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:azimuthal_location;
+        rr:objectMap [ rr:column "azimuthal_location" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:irradiation_type;
+        rr:objectMap [ rr:column "irradiation_type" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:irradiation_type_ions;
+        rr:objectMap [ rr:column "irradiation_type_ions" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:energy;
+        rr:objectMap [ rr:column "energy"; rr:datatype xsd:decimal; ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:irradiation_campaign;
+        rr:objectMap [ rr:column "irradiation_campaign" ];
+    ];
+    #rr:predicateObjectMap [
+    #    rr:predicate entente:T;
+    #    rr:objectMap [ rr:column "T" ];
+    #];
+    #rr:predicateObjectMap [
+    #    rr:predicate entente:T_min;
+    #    rr:objectMap [ rr:column "T_min" ];
+    #];
+    #rr:predicateObjectMap [
+    #    rr:predicate entente:T_max;
+    #    rr:objectMap [ rr:column "T_max" ];
+    #];
+    rr:predicateObjectMap [
+        rr:predicate entente:entry_date;
+        rr:objectMap [ rr:column "entry_date"; rr:datatype xsd:date ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:withdraw_date;
+        rr:objectMap [ rr:column "withdraw_date"; rr:datatype xsd:date ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:flux;
+        rr:objectMap [ rr:column "flux"; rr:datatype xsd:decimal ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:fluence;
+        rr:objectMap [ rr:column "fluence"; rr:datatype xsd:decimal ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:reference_depth;
+        rr:objectMap [ rr:column "reference_depth" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:dose;
+        rr:objectMap [ rr:column "dose"; rr:datatype xsd:decimal ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:dose_rate;
+        rr:objectMap [ rr:column "dose_rate"; rr:datatype xsd:decimal ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:column "remarks" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:irradiated_in;
+        rr:objectMap [
+            rr:parentTriplesMap <#IrradiationFacilityTM>;
+            rr:joinCondition [
+                rr:child "irradiation_facility_id";
+                rr:parent "irradiation_facility_id";
+            ];
+        ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:column "remarks" ];
+    ].
+
+
+
+
+<#HeatTreatmentTM>
+    rr:logicalTable [ rr:tableName "material"; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/heat/{heat_name}";
+        rr:class entente:HeatTreatment;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate emmo:hasParticipant;
+        rr:objectMap [ rr:template "https://w3cid.org/entente/material/{material_id}" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel;
+        rr:objectMap [ rr:column "heat_name" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:heatNumber;
+        rr:objectMap [ rr:column "heat_number" ];
+    ].
+
+<#HeatTreatment_MaterialTM>
+    rr:logicalTable [ rr:sqlQuery """SELECT heat_name, run_number FROM material INNER JOIN heat_treatment ON heat_treatment_id""" ];
+    rr:subjectMap [
+        rr:template "https://w3id.org/emmo#{heat_name}";
+    ];
+    rr:predicateObjectMap [
+        rr:predicate emmo:hasStage;
+        rr:objectMap [ rr:template "https://w3cid.org/entente/heat/{heat_name}+{run_number}" ];
+    ].
+
+<#HeatTreatmentNumberTM>
+    rr:logicalTable [ rr:sqlQuery """
+        SELECT heat_treatment.heat_treatment_id, heat_treatment.remarks, heat_treatment_method, run_number, heat_name,
+        CASE
+            WHEN heat_treatment_method = 'A' THEN 'Austenitizing'
+            WHEN heat_treatment_method = 'T' THEN 'Tempering'
+            WHEN heat_treatment_method = 'R' THEN 'StressRelief'
+            WHEN heat_treatment_method = 'N' THEN 'Normalizing'
+            WHEN heat_treatment_method = 'Z' THEN '' -- TODO not found
+            WHEN heat_treatment_method = 'S' THEN '' -- TODO not found
+            WHEN heat_treatment_method = 'PWSR' THEN 'PostWeldStressRelieving'
+            WHEN heat_treatment_method = 'post-weldment' THEN 'PostWeldment'
+        END FROM heat_treatment INNER JOIN material ON material.material_id=heat_treatment.material_id;
+    """ ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/heat/{heat_name}";
+        rr:class entente:HeatTreatment;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:template "https://w3cid.org/entente/{heat_treatment_method}" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate emmo:hasStage;
+        rr:objectMap [ rr:template "https://w3cid.org/entente/heat/{heat_name}+{run_number}" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:runNumber;
+        rr:objectMap [ rr:column "run_number" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:column "remarks" ];
+    ].
+
+
+<#MaterialTM>
+    rr:logicalTable [ rr:tableName "material"; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/material/{material_id}";
+        rr:class entente:StainlessSteel;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:productForm;               ##### TODO: enumeration datatype?
+        rr:objectMap [ rr:column "product_form" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:grainSize;
+        rr:objectMap [ rr:column "grain_size"; rr:datatype xsd:decimal ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:grainDescription;
+        rr:objectMap [ rr:column "grain_description"; rr:datatype xsd:string ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:dislocationDensity;
+        rr:objectMap [ rr:column "dislocation_density"; rr:datatype xsd:decimal ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:microstructureType;
+        rr:objectMap [ rr:column "microstructure_type"; rr:datatype xsd:string ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:materialsSpecification;
+        rr:objectMap [ rr:column "material_specification"; rr:datatype xsd:string ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel;
+        rr:objectMap [ rr:column "label"; rr:datatype xsd:string ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate skos:altLabel;
+        rr:objectMap [ rr:column "alternative_label" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:template "REPRESENTATIVENESS:\n {representativeness}" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:template "USE:\n {use}" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:column "remarks" ];
+    ].
+
+<#Manufacturer1TM>
+    rr:logicalTable [ rr:sqlQuery """SELECT material_id, MD5(material_manufacturer) AS material_manufacturer FROM material WHERE material_manufacturer IS NOT NULL"""; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/material/{material_id}";
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:hasManufacturer;
+        rr:objectMap [ rr:template "https://w3cid.org/entente/manufacturer/{material_manufacturer}" ];
+    ].
+
+# missing Wikidata ID
+<#Manufacturer2TM>
+    rr:logicalTable [ rr:sqlQuery "SELECT DISTINCT material_manufacturer, MD5(material_manufacturer) AS material_manufacturer_hash FROM material WHERE material_manufacturer IS NOT NULL"; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/manufacturer/{material_manufacturer_hash}";
+        rr:class entente:Manufacturer;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel;
+        rr:objectMap [ rr:column "material_manufacturer" ];
+    ].
+
+<#Material_ChemicalCompositionTM>
+    rr:logicalTable [ rr:sqlQuery """SELECT material.material_id, material.chemical_composition_id FROM material INNER JOIN chemical_composition ON material.chemical_composition_id=chemical_composition.chemical_composition_id"""; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/material/{material_id}";
+    ];
+    rr:predicateObjectMap [
+        rr:predicate emmo:hasProperty;
+        rr:objectMap [ rr:template "https://w3cid.org/entente/single_component_composition/{chemical_composition_id}" ];
+    ].
+
+
+#########################################################################
+############################ CHEMICAL COMPOSITION #######################
+#########################################################################
+
+
+<#ChemicalCompositionTM>
+    rr:logicalTable [ rr:sqlQuery """
+        SELECT chemical_composition_id, "C" AS mass_fraction, 'C' AS chemical_species FROM chemical_composition
+        UNION
+        SELECT chemical_composition_id, "Mn" AS mass_fraction, 'Mn' AS chemical_species FROM chemical_composition
+        UNION
+        SELECT chemical_composition_id, "Si" AS mass_fraction, 'Si' AS chemical_species FROM chemical_composition
+        UNION
+        SELECT chemical_composition_id, "Cr" AS mass_fraction, 'Cr' AS chemical_species FROM chemical_composition
+        UNION
+        SELECT chemical_composition_id, "Ni" AS mass_fraction, 'Ni' AS chemical_species FROM chemical_composition
+        UNION
+        SELECT chemical_composition_id, "Mo" AS mass_fraction, 'Mo' AS chemical_species FROM chemical_composition
+        UNION
+        SELECT chemical_composition_id, "V" AS mass_fraction, 'V' AS chemical_species FROM chemical_composition
+        UNION
+        SELECT chemical_composition_id, "P" AS mass_fraction, 'P' AS chemical_species FROM chemical_composition
+        UNION
+        SELECT chemical_composition_id, "Cu" AS mass_fraction, 'Cu' AS chemical_species FROM chemical_composition
+        UNION
+        SELECT chemical_composition_id, "S" AS mass_fraction, 'S' AS chemical_species FROM chemical_composition
+    """; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/single_component_composition/{chemical_composition_id}";
+        rr:class entente:SingleComponentComposition;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate elite:referenceUnit;
+        rr:objectMap [ rr:constant "%" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:massFraction;
+        rr:objectMap [ rr:column "mass_fraction"; rr:datatype xsd:decimal];
+    ].
+    #rr:predicateObjectMap [
+    #    rr:predicate entente:speciesName;
+    #    rr:objectMap [ rr:column "chemical_species" ];
+    #].
+
+<#ChemicalCompositionTMremarks>
+    rr:logicalTable [ rr:tableName "chemical_composition"; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/single_component_composition/{chemical_composition_id}";
+        rr:class entente:SingleComponentComposition;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment;
+        rr:objectMap [ rr:column "remarks" ];
+    ].
