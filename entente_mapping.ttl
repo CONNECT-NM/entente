@@ -399,25 +399,28 @@
 
 <#ChemicalCompositionTM>
     rr:logicalTable [ rr:sqlQuery """
-        SELECT chemical_composition_id, "C" AS mass_fraction, 'C' AS chemical_species FROM chemical_composition
-        UNION
-        SELECT chemical_composition_id, "Mn" AS mass_fraction, 'Mn' AS chemical_species FROM chemical_composition
-        UNION
-        SELECT chemical_composition_id, "Si" AS mass_fraction, 'Si' AS chemical_species FROM chemical_composition
-        UNION
-        SELECT chemical_composition_id, "Cr" AS mass_fraction, 'Cr' AS chemical_species FROM chemical_composition
-        UNION
-        SELECT chemical_composition_id, "Ni" AS mass_fraction, 'Ni' AS chemical_species FROM chemical_composition
-        UNION
-        SELECT chemical_composition_id, "Mo" AS mass_fraction, 'Mo' AS chemical_species FROM chemical_composition
-        UNION
-        SELECT chemical_composition_id, "V" AS mass_fraction, 'V' AS chemical_species FROM chemical_composition
-        UNION
-        SELECT chemical_composition_id, "P" AS mass_fraction, 'P' AS chemical_species FROM chemical_composition
-        UNION
-        SELECT chemical_composition_id, "Cu" AS mass_fraction, 'Cu' AS chemical_species FROM chemical_composition
-        UNION
-        SELECT chemical_composition_id, "S" AS mass_fraction, 'S' AS chemical_species FROM chemical_composition
+        SELECT chemical_composition_id, mass_fraction, chemical_species
+        FROM (
+            SELECT chemical_composition_id, "C" AS mass_fraction, 'C' AS chemical_species FROM chemical_composition
+            UNION
+            SELECT chemical_composition_id, "Mn" AS mass_fraction, 'Mn' AS chemical_species FROM chemical_composition
+            UNION
+            SELECT chemical_composition_id, "Si" AS mass_fraction, 'Si' AS chemical_species FROM chemical_composition
+            UNION
+            SELECT chemical_composition_id, "Cr" AS mass_fraction, 'Cr' AS chemical_species FROM chemical_composition
+            UNION
+            SELECT chemical_composition_id, "Ni" AS mass_fraction, 'Ni' AS chemical_species FROM chemical_composition
+            UNION
+            SELECT chemical_composition_id, "Mo" AS mass_fraction, 'Mo' AS chemical_species FROM chemical_composition
+            UNION
+            SELECT chemical_composition_id, "V" AS mass_fraction, 'V' AS chemical_species FROM chemical_composition
+            UNION
+            SELECT chemical_composition_id, "P" AS mass_fraction, 'P' AS chemical_species FROM chemical_composition
+            UNION
+            SELECT chemical_composition_id, "Cu" AS mass_fraction, 'Cu' AS chemical_species FROM chemical_composition
+            UNION
+            SELECT chemical_composition_id, "S" AS mass_fraction, 'S' AS chemical_species FROM chemical_composition)
+        AS chemical_composition_layout
     """; ];
     rr:subjectMap [
         rr:template "https://w3cid.org/entente/single_component_composition/{chemical_composition_id}";
@@ -430,11 +433,11 @@
     rr:predicateObjectMap [
         rr:predicate entente:massFraction;
         rr:objectMap [ rr:column "mass_fraction"; rr:datatype xsd:decimal];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate entente:speciesName;
+        rr:objectMap [ rr:column "chemical_species" ];
     ].
-    #rr:predicateObjectMap [
-    #    rr:predicate entente:speciesName;
-    #    rr:objectMap [ rr:column "chemical_species" ];
-    #].
 
 <#ChemicalCompositionTMremarks>
     rr:logicalTable [ rr:tableName "chemical_composition"; ];
