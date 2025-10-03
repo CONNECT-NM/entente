@@ -147,7 +147,7 @@
     rr:logicalTable [ rr:tableName "irradiation_set"; ];
     rr:subjectMap [
         rr:template "https://w3cid.org/entente/irradiation_set/{irradiation_set_id}";
-        rr:class entente:IrradiationFacility;
+        rr:class entente:IrradiationSet;
     ];
     rr:predicateObjectMap [
         rr:predicate entente:name;
@@ -241,7 +241,9 @@
     ].
 
 
-
+#########################################################################
+############################ HEAT TREATMENT ############################
+#########################################################################
 
 <#HeatTreatmentTM>
     rr:logicalTable [ rr:tableName "material"; ];
@@ -262,10 +264,10 @@
         rr:objectMap [ rr:column "heat_number" ];
     ].
 
-<#HeatTreatment_MaterialTM>
-    rr:logicalTable [ rr:sqlQuery """SELECT heat_name, run_number FROM material INNER JOIN heat_treatment ON heat_treatment_id""" ];
+<#HeatTreatment_HeatTreatmentNumberTM>
+    rr:logicalTable [ rr:sqlQuery """SELECT heat_name, run_number FROM material INNER JOIN heat_treatment ON material.material_id=heat_treatment.material_id""" ];
     rr:subjectMap [
-        rr:template "https://w3id.org/emmo#{heat_name}";
+        rr:template "https://w3cid.org/entente/heat/{heat_name}";
     ];
     rr:predicateObjectMap [
         rr:predicate emmo:hasStage;
@@ -274,7 +276,7 @@
 
 <#HeatTreatmentNumberTM>
     rr:logicalTable [ rr:sqlQuery """
-        SELECT heat_treatment.heat_treatment_id, heat_treatment.remarks, heat_treatment_method, run_number, heat_name,
+        SELECT heat_treatment.heat_treatment_id, heat_treatment.remarks, heat_treatment_method, run_number, heat_name, cooling_rate, quench_method,
         CASE
             WHEN heat_treatment_method = 'A' THEN 'Austenitizing'
             WHEN heat_treatment_method = 'T' THEN 'Tempering'
@@ -287,7 +289,7 @@
         END FROM heat_treatment INNER JOIN material ON material.material_id=heat_treatment.material_id;
     """ ];
     rr:subjectMap [
-        rr:template "https://w3cid.org/entente/heat/{heat_name}";
+        rr:template "https://w3cid.org/entente/heat/{heat_name}+{run_number}";
         rr:class entente:HeatTreatment;
     ];
     rr:predicateObjectMap [
@@ -295,17 +297,38 @@
         rr:objectMap [ rr:template "https://w3cid.org/entente/{heat_treatment_method}" ];
     ];
     rr:predicateObjectMap [
-        rr:predicate emmo:hasStage;
-        rr:objectMap [ rr:template "https://w3cid.org/entente/heat/{heat_name}+{run_number}" ];
+        rr:predicate entente:runNumber;
+        rr:objectMap [ rr:column "run_number" ; rr:datatype xsd:integer ];
     ];
     rr:predicateObjectMap [
-        rr:predicate entente:runNumber;
-        rr:objectMap [ rr:column "run_number" ];
+        rr:predicate entente:quench_method;
+        rr:objectMap [ rr:column "quench_method" ];
     ];
+    rr:predicateObjectMap [
+        rr:predicate entente:cooling_rate;
+        rr:objectMap [ rr:column "cooling_rate" ; rr:datatype xsd:decimal ];
+    ];
+    #rr:predicateObjectMap [
+    #    rr:predicate entente:T;
+    #    rr:objectMap [ rr:column "T" ];
+    #];
+    #rr:predicateObjectMap [
+    #    rr:predicate entente:T_min;
+    #    rr:objectMap [ rr:column "T_min" ];
+    #];
+    #rr:predicateObjectMap [
+    #    rr:predicate entente:T_max;
+    #    rr:objectMap [ rr:column "T_max" ];
+    #];
     rr:predicateObjectMap [
         rr:predicate rdfs:comment;
         rr:objectMap [ rr:column "remarks" ];
     ].
+
+
+#########################################################################
+############################ MATERIAL ###################################
+#########################################################################
 
 
 <#MaterialTM>
@@ -359,26 +382,14 @@
         rr:objectMap [ rr:column "remarks" ];
     ].
 
-<#Manufacturer1TM>
-    rr:logicalTable [ rr:sqlQuery """SELECT material_id, MD5(material_manufacturer) AS material_manufacturer FROM material WHERE material_manufacturer IS NOT NULL"""; ];
+<#Manufacturer_Material_TM>
+    rr:logicalTable [ rr:sqlQuery """SELECT material_id, MD5(material_manufacturer) AS material_manufacturer_hash FROM material WHERE material_manufacturer IS NOT NULL"""; ];
     rr:subjectMap [
         rr:template "https://w3cid.org/entente/material/{material_id}";
     ];
     rr:predicateObjectMap [
         rr:predicate entente:hasManufacturer;
-        rr:objectMap [ rr:template "https://w3cid.org/entente/manufacturer/{material_manufacturer}" ];
-    ].
-
-# missing Wikidata ID
-<#Manufacturer2TM>
-    rr:logicalTable [ rr:sqlQuery "SELECT DISTINCT material_manufacturer, MD5(material_manufacturer) AS material_manufacturer_hash FROM material WHERE material_manufacturer IS NOT NULL"; ];
-    rr:subjectMap [
-        rr:template "https://w3cid.org/entente/manufacturer/{material_manufacturer_hash}";
-        rr:class entente:Manufacturer;
-    ];
-    rr:predicateObjectMap [
-        rr:predicate skos:prefLabel;
-        rr:objectMap [ rr:column "material_manufacturer" ];
+        rr:objectMap [ rr:template "https://w3cid.org/entente/manufacturer/{material_manufacturer_hash}" ];
     ].
 
 <#Material_ChemicalCompositionTM>
@@ -389,6 +400,24 @@
     rr:predicateObjectMap [
         rr:predicate emmo:hasProperty;
         rr:objectMap [ rr:template "https://w3cid.org/entente/single_component_composition/{chemical_composition_id}" ];
+    ].
+
+
+#########################################################################
+############################ MANUFACTURER ###############################
+#########################################################################
+
+
+# missing Wikidata ID
+<#ManufacturerTM>
+    rr:logicalTable [ rr:sqlQuery "SELECT DISTINCT material_manufacturer, MD5(material_manufacturer) AS material_manufacturer_hash FROM material WHERE material_manufacturer IS NOT NULL"; ];
+    rr:subjectMap [
+        rr:template "https://w3cid.org/entente/manufacturer/{material_manufacturer_hash}";
+        rr:class entente:Manufacturer;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel;
+        rr:objectMap [ rr:column "material_manufacturer" ];
     ].
 
 
@@ -424,7 +453,7 @@
     """; ];
     rr:subjectMap [
         rr:template "https://w3cid.org/entente/single_component_composition/{chemical_composition_id}";
-        rr:class entente:SingleComponentComposition;
+        # rr:class entente:SingleComponentComposition; it is in the other TM with a table instead of R2RML view
     ];
     rr:predicateObjectMap [
         rr:predicate elite:referenceUnit;
