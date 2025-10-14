@@ -282,8 +282,8 @@
             WHEN heat_treatment_method = 'T' THEN 'Tempering'
             WHEN heat_treatment_method = 'R' THEN 'StressRelief'
             WHEN heat_treatment_method = 'N' THEN 'Normalizing'
-            WHEN heat_treatment_method = 'Z' THEN '' -- TODO not found
-            WHEN heat_treatment_method = 'S' THEN '' -- TODO not found
+            WHEN heat_treatment_method = 'Z' THEN ''
+            WHEN heat_treatment_method = 'S' THEN ''
             WHEN heat_treatment_method = 'PWSR' THEN 'PostWeldStressRelieving'
             WHEN heat_treatment_method = 'post-weldment' THEN 'PostWeldment'
         END FROM heat_treatment INNER JOIN material ON material.material_id=heat_treatment.material_id;
