@@ -7,7 +7,7 @@
 @base <https://w3cid.org/entente#> .
 
 <https://w3cid.org/entente> rdf:type owl:Ontology ;
-                             owl:imports <https://w3id.org/emmo/emmo-lite/0.0.5> .
+                             owl:imports <https://w3id.org/emmo/0.0.7/elite> .
 
 #################################################################
 #    Object Properties
@@ -16,6 +16,10 @@
 ###  https://w3cid.org/entente#hasManufacturer
 :hasManufacturer rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf <https://w3id.org/emmo/emmo-for-humans#coexistsWith> .
+
+
+###  https://w3id.org/emmo/emmo-for-humans#coexistsWith
+<https://w3id.org/emmo/emmo-for-humans#coexistsWith> rdf:type owl:ObjectProperty .
 
 
 #################################################################
@@ -97,18 +101,18 @@
 
 ###  https://w3cid.org/entente#Duration
 :Duration rdf:type owl:Class ;
-          rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Property> ;
+          rdfs:subClassOf <https://w3id.org/emmo/hume#Property> ;
           <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_0adabf6f_7404_44cb_9f65_32d83d8101a3> .
 
 
 ###  https://w3cid.org/entente#HeatTreatment
 :HeatTreatment rdf:type owl:Class ;
-               rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Process> .
+               rdfs:subClassOf <https://w3id.org/emmo/hume#Process> .
 
 
 ###  https://w3cid.org/entente#Manufacturer
 :Manufacturer rdf:type owl:Class ;
-              rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Agent> ;
+              rdfs:subClassOf <https://w3id.org/emmo/hume#Agent> ;
               <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_c0afb341_7d31_4883_a307_ae4606df2a1b> .
 
 
@@ -129,13 +133,13 @@
 
 ###  https://w3cid.org/entente#SingleComponentComposition
 :SingleComponentComposition rdf:type owl:Class ;
-                            rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Property> ;
+                            rdfs:subClassOf <https://w3id.org/emmo/hume#Property> ;
                             <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_172e2c96_180b_40f8_a3e7_b624471f40c2> .
 
 
 ###  https://w3cid.org/entente#StainlessSteel
 :StainlessSteel rdf:type owl:Class ;
-                rdfs:subClassOf <https://w3id.org/emmo/emmo-for-humans#Material> .
+                rdfs:subClassOf <https://w3id.org/emmo/hume#Material> .
 
 
 ###  https://w3cid.org/entente#StressRelief
