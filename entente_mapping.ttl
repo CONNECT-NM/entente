@@ -5,6 +5,8 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
 @prefix emmo: <https://w3id.org/emmo#> .
 @prefix hume: <https://w3cid.org/emmo/emmo-for-humans#humanlabels> .
 @prefix elite: <https://w3cid.org/emmo/emmo-for-humans#humanlabels> .
@@ -23,11 +25,11 @@
         rr:class entente:Project;
     ];
     rr:predicateObjectMap [
-        rr:predicate entente:title;
+        rr:predicate dcterms:title;
         rr:objectMap [ rr:column "title" ];
     ];
     rr:predicateObjectMap [
-        rr:predicate entente:url;
+        rr:predicate dcterms:homepage;
         rr:objectMap [ rr:column "url" ];
     ];
     rr:predicateObjectMap [
@@ -51,11 +53,11 @@
         rr:class entente:Citation;
     ];
     rr:predicateObjectMap [
-        rr:predicate entente:title;
+        rr:predicate dcterms:title;
         rr:objectMap [ rr:column "title" ];
     ];
     rr:predicateObjectMap [
-        rr:predicate entente:authors;
+        rr:predicate dcterms:creator;
         rr:objectMap [ rr:column "authors" ];
     ];
     rr:predicateObjectMap [
@@ -67,11 +69,11 @@
         rr:objectMap [ rr:column "journal_or_conference" ];
     ];
     rr:predicateObjectMap [
-        rr:predicate entente:publisher;
+        rr:predicate dcterms:publisher;
         rr:objectMap [ rr:column "publisher" ];
     ];
     rr:predicateObjectMap [
-        rr:predicate entente:publication_date;
+        rr:predicate dcterms:issued;
         rr:objectMap [ rr:column "publication_date"; rr:datatype xsd:date];
     ];
     rr:predicateObjectMap [
@@ -79,7 +81,7 @@
         rr:objectMap [ rr:column "issn_isbn" ];
     ];
     rr:predicateObjectMap [
-        rr:predicate entente:url;
+        rr:predicate dcterms:homepage;
         rr:objectMap [ rr:column "url" ];
     ];
     rr:predicateObjectMap [
