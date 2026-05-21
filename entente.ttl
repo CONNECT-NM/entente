@@ -13,9 +13,39 @@
 #    Object Properties
 #################################################################
 
+###  http://emmo.info/emmo#hasProperty
+<http://emmo.info/emmo#hasProperty> rdf:type owl:ObjectProperty .
+
+
+###  https://w3cid.org/entente#hasHeatTreatmentMethod
+:hasHeatTreatmentMethod rdf:type owl:ObjectProperty .
+
+
 ###  https://w3cid.org/entente#hasManufacturer
 :hasManufacturer rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf <https://w3id.org/emmo/emmo-for-humans#coexistsWith> .
+
+
+###  https://w3cid.org/entente#hasMicrostructure
+:hasMicrostructure rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf <http://emmo.info/emmo#hasProperty> ;
+                   rdfs:range :Microstructure .
+
+
+###  https://w3cid.org/entente#hasOrientation
+:hasOrientation rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <http://emmo.info/emmo#hasProperty> ;
+                rdfs:domain :Specimen .
+
+
+###  https://w3cid.org/entente#hasSpecification
+:hasSpecification rdf:type owl:ObjectProperty .
+
+
+###  https://w3cid.org/entente#hasTargetTest
+:hasTargetTest rdf:type owl:ObjectProperty ;
+               rdfs:domain :Specimen ;
+               rdfs:range :Specimen .
 
 
 ###  https://w3id.org/emmo/emmo-for-humans#coexistsWith
@@ -94,9 +124,62 @@
 #    Classes
 #################################################################
 
+###  https://w3cid.org/entente#AirCooling
+:AirCooling rdf:type owl:Class ;
+            rdfs:subClassOf :QuenchMethod ;
+            rdfs:label "Air cooling (AC)"@en .
+
+
+###  https://w3cid.org/entente#Austenite
+:Austenite rdf:type owl:Class ;
+           rdfs:subClassOf :Microstructure ;
+           rdfs:label "Austenite"@en .
+
+
 ###  https://w3cid.org/entente#Austenitizing
 :Austenitizing rdf:type owl:Class ;
                rdfs:subClassOf :HeatTreatment .
+
+
+###  https://w3cid.org/entente#BWR
+:BWR rdf:type owl:Class ;
+     rdfs:subClassOf :NuclearReactor ;
+     rdfs:label "Boiling Water Reactor (BWR)"@en .
+
+
+###  https://w3cid.org/entente#BrineQuench
+:BrineQuench rdf:type owl:Class ;
+             rdfs:subClassOf :QuenchMethod ;
+             rdfs:label "Brine quench (BQ)"@en .
+
+
+###  https://w3cid.org/entente#Cementite
+:Cementite rdf:type owl:Class ;
+           rdfs:subClassOf :Microstructure ;
+           rdfs:label "Cementite"@en .
+
+
+###  https://w3cid.org/entente#CharpyImpactSpecimen
+:CharpyImpactSpecimen rdf:type owl:Class ;
+                      rdfs:subClassOf :Specimen .
+
+
+###  https://w3cid.org/entente#Charpy_U_Notch
+:Charpy_U_Notch rdf:type owl:Class ;
+                rdfs:subClassOf :CharpyImpactSpecimen ;
+                rdfs:label "U-Notch"@en .
+
+
+###  https://w3cid.org/entente#Charpy_V_Notch
+:Charpy_V_Notch rdf:type owl:Class ;
+                rdfs:subClassOf :CharpyImpactSpecimen ;
+                rdfs:label "V-Notch"@en .
+
+
+###  https://w3cid.org/entente#CompactTension_CT
+:CompactTension_CT rdf:type owl:Class ;
+                   rdfs:subClassOf :FractureToughness ;
+                   rdfs:label "Compact Tension (CT)"@en .
 
 
 ###  https://w3cid.org/entente#Duration
@@ -105,9 +188,90 @@
           <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_0adabf6f_7404_44cb_9f65_32d83d8101a3> .
 
 
+###  https://w3cid.org/entente#ElectronIrradiation
+:ElectronIrradiation rdf:type owl:Class ;
+                     rdfs:subClassOf :IrradiationSource ;
+                     rdfs:label "Electrons Irradiation"@en .
+
+
+###  https://w3cid.org/entente#Ferrite
+:Ferrite rdf:type owl:Class ;
+         rdfs:subClassOf :Microstructure ;
+         rdfs:label "Ferrite"@en .
+
+
+###  https://w3cid.org/entente#Forging
+:Forging rdf:type owl:Class ;
+         rdfs:subClassOf :ProductForm .
+
+
+###  https://w3cid.org/entente#FractureToughness
+:FractureToughness rdf:type owl:Class ;
+                   rdfs:subClassOf <https://w3id.org/emmo/hume#Characterisation> .
+
+
+###  https://w3cid.org/entente#FractureToughnessSpecimen
+:FractureToughnessSpecimen rdf:type owl:Class ;
+                           rdfs:subClassOf :Specimen .
+
+
+###  https://w3cid.org/entente#FurnaceCooling
+:FurnaceCooling rdf:type owl:Class ;
+                rdfs:subClassOf :QuenchMethod ;
+                rdfs:label "Furnace cooling (FC)"@en .
+
+
+###  https://w3cid.org/entente#HAZ
+:HAZ rdf:type owl:Class ;
+     rdfs:subClassOf :ProductForm ;
+     rdfs:label "Heat-Affected Zone"@en .
+
+
 ###  https://w3cid.org/entente#HeatTreatment
 :HeatTreatment rdf:type owl:Class ;
                rdfs:subClassOf <https://w3id.org/emmo/hume#Process> .
+
+
+###  https://w3cid.org/entente#IonIrradiation
+:IonIrradiation rdf:type owl:Class ;
+                rdfs:subClassOf :IrradiationSource ;
+                rdfs:label "Ions Irradiation"@en .
+
+
+###  https://w3cid.org/entente#IonIrradiationFacility
+:IonIrradiationFacility rdf:type owl:Class ;
+                        rdfs:subClassOf :IrradiationFacility ;
+                        rdfs:label "Ion Irradiation Facility"@en .
+
+
+###  https://w3cid.org/entente#IrradiationFacility
+:IrradiationFacility rdf:type owl:Class ;
+                     rdfs:subClassOf <https://w3id.org/emmo/hume#System> ;
+                     rdfs:label "Irradiation Facility"@en .
+
+
+###  https://w3cid.org/entente#IrradiationProcess
+:IrradiationProcess rdf:type owl:Class ;
+                    rdfs:subClassOf <https://w3id.org/emmo/hume#Process> ;
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Irradiation Process"@en .
+
+
+###  https://w3cid.org/entente#IrradiationSource
+:IrradiationSource rdf:type owl:Class ;
+                   rdfs:subClassOf :IrradiationProcess ;
+                   rdfs:label "Irradiation by Source"@en .
+
+
+###  https://w3cid.org/entente#LowerBainite
+:LowerBainite rdf:type owl:Class ;
+              rdfs:subClassOf :Microstructure ;
+              rdfs:label "Lower Bainite"@en .
+
+
+###  https://w3cid.org/entente#MTR
+:MTR rdf:type owl:Class ;
+     rdfs:subClassOf :NuclearReactor ;
+     rdfs:label "Material Testing Reactor (MTR)"@en .
 
 
 ###  https://w3cid.org/entente#Manufacturer
@@ -116,9 +280,61 @@
               <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_c0afb341_7d31_4883_a307_ae4606df2a1b> .
 
 
+###  https://w3cid.org/entente#Martensite
+:Martensite rdf:type owl:Class ;
+            rdfs:subClassOf :Microstructure ;
+            rdfs:label "Martensite"@en .
+
+
+###  https://w3cid.org/entente#Microstructure
+:Microstructure rdf:type owl:Class ;
+                rdfs:subClassOf <https://w3id.org/emmo/hume#Material> ;
+                rdfs:label "Microstructure"@en .
+
+
+###  https://w3cid.org/entente#ModelAlloy
+:ModelAlloy rdf:type owl:Class ;
+            rdfs:subClassOf :ProductForm .
+
+
+###  https://w3cid.org/entente#NeutronIrradiation
+:NeutronIrradiation rdf:type owl:Class ;
+                    rdfs:subClassOf :IrradiationSource ;
+                    rdfs:label "Neutrons Irradiation"@en .
+
+
 ###  https://w3cid.org/entente#Normalizing
 :Normalizing rdf:type owl:Class ;
              rdfs:subClassOf :HeatTreatment .
+
+
+###  https://w3cid.org/entente#NuclearReactor
+:NuclearReactor rdf:type owl:Class ;
+                rdfs:subClassOf :IrradiationFacility ;
+                rdfs:label "Nuclear Reactor"@en .
+
+
+###  https://w3cid.org/entente#OperatingReactor
+:OperatingReactor rdf:type owl:Class ;
+                  rdfs:subClassOf :IrradiationFacility ;
+                  rdfs:label "Operating Reactor"@en .
+
+
+###  https://w3cid.org/entente#PWR
+:PWR rdf:type owl:Class ;
+     rdfs:subClassOf :NuclearReactor ;
+     rdfs:label "Pressurized Water Reactor (PWR)"@en .
+
+
+###  https://w3cid.org/entente#Pearlite
+:Pearlite rdf:type owl:Class ;
+          rdfs:subClassOf :Microstructure ;
+          rdfs:label "Pearlite"@en .
+
+
+###  https://w3cid.org/entente#Plate
+:Plate rdf:type owl:Class ;
+       rdfs:subClassOf :ProductForm .
 
 
 ###  https://w3cid.org/entente#PostWeldStressRelieving
@@ -131,10 +347,46 @@
               rdfs:subClassOf :HeatTreatment .
 
 
+###  https://w3cid.org/entente#ProductForm
+:ProductForm rdf:type owl:Class ;
+             rdfs:subClassOf <https://w3id.org/emmo/hume#Object> ;
+             rdfs:label "Product Form"@en .
+
+
+###  https://w3cid.org/entente#ProtonIrradiation
+:ProtonIrradiation rdf:type owl:Class ;
+                   rdfs:subClassOf :IrradiationSource ;
+                   rdfs:label "Protons Irradiation"@en .
+
+
+###  https://w3cid.org/entente#QuenchMethod
+:QuenchMethod rdf:type owl:Class ;
+              rdfs:subClassOf <https://w3id.org/emmo/hume#Process> ;
+              rdfs:label "Quench Method"@en .
+
+
+###  https://w3cid.org/entente#ResearchReactor
+:ResearchReactor rdf:type owl:Class ;
+                 rdfs:subClassOf :IrradiationFacility ;
+                 rdfs:label "Research Reactor"@en .
+
+
+###  https://w3cid.org/entente#SRM
+:SRM rdf:type owl:Class ;
+     rdfs:subClassOf :ProductForm ;
+     rdfs:label "Standard Reference Material"@en .
+
+
 ###  https://w3cid.org/entente#SingleComponentComposition
 :SingleComponentComposition rdf:type owl:Class ;
                             rdfs:subClassOf <https://w3id.org/emmo/hume#Property> ;
                             <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_172e2c96_180b_40f8_a3e7_b624471f40c2> .
+
+
+###  https://w3cid.org/entente#Specimen
+:Specimen rdf:type owl:Class ;
+          rdfs:subClassOf <https://w3id.org/emmo/hume#Component> ;
+          rdfs:label "Specimen"@en .
 
 
 ###  https://w3cid.org/entente#StainlessSteel
@@ -142,14 +394,73 @@
                 rdfs:subClassOf <https://w3id.org/emmo/hume#Material> .
 
 
+###  https://w3cid.org/entente#Steel_15Kh2MFA
+:Steel_15Kh2MFA rdf:type owl:Class ;
+                rdfs:subClassOf :StainlessSteel .
+
+
+###  https://w3cid.org/entente#Steel_16MND5
+:Steel_16MND5 rdf:type owl:Class ;
+              rdfs:subClassOf :StainlessSteel .
+
+
+###  https://w3cid.org/entente#Steel_A302B
+:Steel_A302B rdf:type owl:Class ;
+             rdfs:subClassOf :StainlessSteel .
+
+
+###  https://w3cid.org/entente#Steel_A533B1
+:Steel_A533B1 rdf:type owl:Class ;
+              rdfs:subClassOf :StainlessSteel .
+
+
 ###  https://w3cid.org/entente#StressRelief
 :StressRelief rdf:type owl:Class ;
               rdfs:subClassOf :HeatTreatment .
 
 
+###  https://w3cid.org/entente#TEMSpecimen
+:TEMSpecimen rdf:type owl:Class ;
+             rdfs:subClassOf :Specimen .
+
+
 ###  https://w3cid.org/entente#Tempering
 :Tempering rdf:type owl:Class ;
            rdfs:subClassOf :HeatTreatment .
+
+
+###  https://w3cid.org/entente#TensileSpecimen
+:TensileSpecimen rdf:type owl:Class ;
+                 rdfs:subClassOf :Specimen .
+
+
+###  https://w3cid.org/entente#ThermalIrradiation
+:ThermalIrradiation rdf:type owl:Class ;
+                    rdfs:subClassOf :IrradiationSource ;
+                    rdfs:label "Thermal Neutrons  Irradiation"@en .
+
+
+###  https://w3cid.org/entente#UpperBainite
+:UpperBainite rdf:type owl:Class ;
+              rdfs:subClassOf :Microstructure ;
+              rdfs:label "Upper Bainite"@en .
+
+
+###  https://w3cid.org/entente#WaterQuench
+:WaterQuench rdf:type owl:Class ;
+             rdfs:subClassOf :QuenchMethod ;
+             rdfs:label "Water quench (WQ)"@en .
+
+
+###  https://w3cid.org/entente#WedgeOpeningLoading_WOL
+:WedgeOpeningLoading_WOL rdf:type owl:Class ;
+                         rdfs:subClassOf :FractureToughness ;
+                         rdfs:label "Wedge Opening Loading (WOL)"@en .
+
+
+###  https://w3cid.org/entente#Weld
+:Weld rdf:type owl:Class ;
+      rdfs:subClassOf :ProductForm .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
