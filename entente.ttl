@@ -4,152 +4,923 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
 @base <https://w3cid.org/entente#> .
 
-<https://w3cid.org/entente> rdf:type owl:Ontology ;
-                             owl:imports <https://w3id.org/emmo/0.0.7/elite> .
+<https://w3id.org/entente> rdf:type owl:Ontology ;
+                            owl:versionIRI <https://w3id.org/entente/0.0.1> ;
+                            owl:imports <https://w3id.org/emmo/0.0.7/elite> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/identifier
+<http://purl.org/dc/terms/identifier> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+<http://purl.org/dc/terms/source> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#isDefinedBy
+rdfs:isDefinedBy rdfs:subPropertyOf rdfs:seeAlso .
+
+
+###  http://www.w3.org/2004/02/skos/core#altLabel
+skos:altLabel rdf:type owl:AnnotationProperty ;
+              rdfs:subPropertyOf rdfs:label .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdfs:subPropertyOf rdfs:label .
+
+
+###  https://w3cid.org/entente#acronym
+:acronym rdf:type owl:AnnotationProperty ;
+         rdfs:comment "Short acronym identifying the project."@en ;
+         skos:prefLabel "Acronym"@en ;
+         rdfs:subPropertyOf skos:altLabel ;
+         rdfs:range xsd:string ;
+         rdfs:domain :Project .
+
+
+###  https://w3cid.org/entente#citationType
+:citationType rdf:type owl:AnnotationProperty ;
+              rdfs:comment "The type of the cited work (e.g. journal article, conference paper, report)."@en ;
+              skos:prefLabel "citation type"@en ;
+              rdfs:range xsd:string ;
+              rdfs:domain :Citation .
+
+
+###  https://w3cid.org/entente#doi
+:doi rdf:type owl:AnnotationProperty ;
+     rdfs:comment "The Digital Object Identifier of the cited work."@en ;
+     skos:prefLabel "DOI"@en ;
+     rdfs:subPropertyOf <http://purl.org/dc/terms/identifier> ;
+     rdfs:range xsd:string ;
+     rdfs:domain :Citation .
+
+
+###  https://w3cid.org/entente#issn_isbn
+:issn_isbn rdf:type owl:AnnotationProperty ;
+           rdfs:comment "The ISSN (for journals) or ISBN (for books) of the cited work."@en ;
+           skos:prefLabel "ISSN / ISBN"@en ;
+           rdfs:subPropertyOf <http://purl.org/dc/terms/identifier> ;
+           rdfs:range xsd:string ;
+           rdfs:domain :Citation .
+
+
+###  https://w3cid.org/entente#journal_or_conference
+:journal_or_conference rdf:type owl:AnnotationProperty ;
+                       rdfs:comment "The name of the journal or conference in which the cited work was published."@en ;
+                       skos:prefLabel "Journal or Conference"@en ;
+                       rdfs:subPropertyOf <http://purl.org/dc/terms/source> ;
+                       rdfs:range xsd:string ;
+                       rdfs:domain :Citation .
+
+
+###  https://w3cid.org/entente#name
+:name rdf:type owl:AnnotationProperty ;
+      rdfs:comment "A human-readable name for the resource."@en ;
+      skos:prefLabel "Name"@en ;
+      rdfs:subPropertyOf skos:prefLabel ;
+      rdfs:range xsd:string .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
 
 #################################################################
 #    Object Properties
 #################################################################
 
-###  https://w3cid.org/entente#hasManufacturer
-:hasManufacturer rdf:type owl:ObjectProperty ;
-                 rdfs:subPropertyOf <https://w3id.org/emmo/emmo-for-humans#coexistsWith> .
+###  https://w3cid.org/entente#hasMicrostructure
+:hasMicrostructure rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf <https://w3id.org/emmo/hume#hasProperty> ;
+                   rdfs:range :Microstructure ;
+                   skos:prefLabel "Has Microstructure"@en .
 
 
-###  https://w3id.org/emmo/emmo-for-humans#coexistsWith
-<https://w3id.org/emmo/emmo-for-humans#coexistsWith> rdf:type owl:ObjectProperty .
+###  https://w3cid.org/entente#hasOrientation
+:hasOrientation rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <https://w3id.org/emmo/hume#hasProperty> ;
+                rdfs:domain :Specimen ;
+                skos:prefLabel "Has Orientation"@en .
+
+
+###  https://w3cid.org/entente#irradiatedIn
+:irradiatedIn rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <https://w3id.org/emmo/hume#partakesIn> ;
+              rdfs:domain :IrradiationSet ;
+              rdfs:range :IrradiationFacility ;
+              rdfs:comment "Links an irradiation set to the facility in which the irradiation was performed."@en ;
+              skos:prefLabel "irradiated in"@en .
+
+
+###  https://w3cid.org/entente#manufacturedBy
+:manufacturedBy rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <https://w3id.org/emmo/hume#isAfter> ;
+                skos:prefLabel "manufactured by"@en .
+
+
+###  https://w3id.org/emmo/hume#coexistsWith
+<https://w3id.org/emmo/hume#coexistsWith> rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/emmo/hume#hasProperty
+<https://w3id.org/emmo/hume#hasProperty> rdf:type owl:ObjectProperty .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
+###  https://w3cid.org/entente#azimuthalLocation
+:azimuthalLocation rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf :irradiationSetData ;
+                   rdfs:domain :IrradiationSet ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "The azimuthal position of the irradiation set within the reactor."@en ;
+                   skos:prefLabel "azimuthal location"@en .
+
+
+###  https://w3cid.org/entente#beganOperationDate
+:beganOperationDate rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf :irradiationFacilityData ;
+                    rdfs:domain :IrradiationFacility ;
+                    rdfs:range xsd:date ;
+                    rdfs:comment "The date on which the irradiation facility began operation."@en ;
+                    skos:prefLabel "began operation date"@en .
+
+
+###  https://w3cid.org/entente#ceasedOperationDate
+:ceasedOperationDate rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf :irradiationFacilityData ;
+                     rdfs:domain :IrradiationFacility ;
+                     rdfs:range xsd:date ;
+                     rdfs:comment "The date on which the irradiation facility ceased operation."@en ;
+                     skos:prefLabel "ceased operation date"@en .
+
+
+###  https://w3cid.org/entente#compositionData
+:compositionData rdf:type owl:DatatypeProperty ;
+                 skos:prefLabel "composition data" .
+
+
+###  https://w3cid.org/entente#coolingRate
+:coolingRate rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :heatTreatmentData ;
+             rdfs:domain :HeatTreatment ;
+             rdfs:range xsd:decimal ;
+             rdfs:comment "The cooling rate applied during a heat treatment step, expressed in °C/h."@en ;
+             skos:prefLabel "cooling rate"@en .
+
+
+###  https://w3cid.org/entente#country
+:country rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :irradiationFacilityData ;
+         rdfs:domain :IrradiationFacility ;
+         rdfs:range xsd:string ;
+         rdfs:comment "The country where the irradiation facility is located."@en ;
+         skos:prefLabel "country"@en .
+
+
+###  https://w3cid.org/entente#designer
+:designer rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf :irradiationFacilityData ;
+          rdfs:domain :IrradiationFacility ;
+          rdfs:range xsd:string ;
+          rdfs:comment "The organisation that designed the irradiation facility."@en ;
+          skos:prefLabel "designer"@en .
+
+
+###  https://w3cid.org/entente#dislocationDensity
+:dislocationDensity rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf :materialsData ;
+                    rdfs:domain :StainlessSteel ;
+                    rdfs:range xsd:decimal ;
+                    rdfs:comment "The dislocation density of the material, expressed in m⁻²."@en ;
+                    skos:prefLabel "dislocation density"@en .
+
+
+###  https://w3cid.org/entente#dose
+:dose rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf :irradiationSetData ;
+      rdfs:domain :IrradiationSet ;
+      rdfs:range xsd:decimal ;
+      rdfs:comment "The total radiation dose received by the irradiation set, expressed in dpa."@en ;
+      skos:prefLabel "dose"@en .
+
+
+###  https://w3cid.org/entente#doseRate
+:doseRate rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf :irradiationSetData ;
+          rdfs:domain :IrradiationSet ;
+          rdfs:range xsd:decimal ;
+          rdfs:comment "The radiation dose rate for the irradiation set, expressed in dpa/s."@en ;
+          skos:prefLabel "dose rate"@en .
+
+
+###  https://w3cid.org/entente#efpy
+:efpy rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf :irradiationSetData ;
+      rdfs:domain :IrradiationSet ;
+      rdfs:range xsd:decimal ;
+      rdfs:comment "The Effective Full Power Years (EFPY) of reactor operation corresponding to this irradiation set."@en ;
+      skos:altLabel "efpy"@en ;
+      skos:prefLabel "effective full power years"@en .
+
+
+###  https://w3cid.org/entente#energy
+:energy rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf :irradiationSetData ;
+        rdfs:domain :IrradiationSet ;
+        rdfs:range xsd:decimal ;
+        rdfs:comment "The energy of the irradiating particles, expressed in MeV."@en ;
+        skos:prefLabel "energy"@en .
+
+
+###  https://w3cid.org/entente#entryDate
+:entryDate rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf :irradiationSetData ;
+           rdfs:domain :IrradiationSet ;
+           rdfs:range xsd:date ;
+           rdfs:comment "The date on which the specimens were placed in the irradiation facility."@en ;
+           skos:prefLabel "entry date"@en .
+
+
+###  https://w3cid.org/entente#fluence
+:fluence rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :irradiationSetData ;
+         rdfs:domain :IrradiationSet ;
+         rdfs:range xsd:decimal ;
+         rdfs:comment "The neutron fluence received by the irradiation set, expressed in n/cm²."@en ;
+         skos:prefLabel "fluence"@en .
+
+
+###  https://w3cid.org/entente#flux
+:flux rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf :irradiationSetData ;
+      rdfs:domain :IrradiationSet ;
+      rdfs:range xsd:decimal ;
+      rdfs:comment "The neutron flux at the specimen location, expressed in n/(cm²·s)."@en ;
+      skos:prefLabel "flux"@en .
+
+
+###  https://w3cid.org/entente#grainDescription
+:grainDescription rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf :materialsData ;
+                  rdfs:domain :StainlessSteel ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "A textual description of the grain structure of the material."@en ;
+                  skos:prefLabel "grain description"@en .
+
+
 ###  https://w3cid.org/entente#grainSize
 :grainSize rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf :materialsData ;
            rdfs:range xsd:float ;
-           rdfs:comment "The size of the grains in the microstructure, expressed in μm-"@en .
+           rdfs:comment "The size of the grains in the microstructure, expressed in μm-"@en ;
+           skos:prefLabel "grain size"@en .
 
 
 ###  https://w3cid.org/entente#heatNumber
 :heatNumber rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf :heatTreatmentData .
+            rdfs:subPropertyOf :heatTreatmentData ;
+            skos:prefLabel "heat number"@en .
 
 
 ###  https://w3cid.org/entente#heatTreatmentData
 :heatTreatmentData rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf owl:topDataProperty ;
-                   rdfs:domain :HeatTreatment .
+                   rdfs:domain :HeatTreatment ;
+                   skos:prefLabel "heat treatment data"@en .
+
+
+###  https://w3cid.org/entente#irradiationCampaign
+:irradiationCampaign rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf :irradiationSetData ;
+                     rdfs:domain :IrradiationSet ;
+                     rdfs:range xsd:string ;
+                     rdfs:comment "The name or identifier of the irradiation campaign."@en ;
+                     skos:prefLabel "irradiation campaign"@en .
+
+
+###  https://w3cid.org/entente#irradiationFacilityData
+:irradiationFacilityData rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf owl:topDataProperty ;
+                         skos:prefLabel "irradiation facility data"@en .
+
+
+###  https://w3cid.org/entente#irradiationFacilityType
+:irradiationFacilityType rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf :irradiationFacilityData ;
+                         rdfs:domain :IrradiationFacility ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "The type of the irradiation facility (e.g. operating reactor, research reactor, ion facility)."@en ;
+                         skos:prefLabel "irradiation facility type"@en .
+
+
+###  https://w3cid.org/entente#irradiationSetData
+:irradiationSetData rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    skos:prefLabel "irradiation set data"@en .
+
+
+###  https://w3cid.org/entente#irradiationType
+:irradiationType rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :irradiationSetData ;
+                 rdfs:domain :IrradiationSet ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "The type of irradiation (e.g. neutron, proton, electron, ion)."@en ;
+                 skos:prefLabel "irradiation type"@en .
+
+
+###  https://w3cid.org/entente#irradiationTypeIons
+:irradiationTypeIons rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf :irradiationSetData ;
+                     rdfs:domain :IrradiationSet ;
+                     rdfs:range xsd:string ;
+                     rdfs:comment "The species of ions used when irradiation_type is ion irradiation."@en ;
+                     skos:prefLabel "Irradiation Type Ion Species"@en .
+
+
+###  https://w3cid.org/entente#leadFactor
+:leadFactor rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :irradiationSetData ;
+            rdfs:domain :IrradiationSet ;
+            rdfs:range xsd:decimal ;
+            rdfs:comment "The lead factor, i.e. the ratio of flux at the specimen location to flux at the vessel wall."@en ;
+            skos:prefLabel "lead factor"@en .
 
 
 ###  https://w3cid.org/entente#manufacturerID
 :manufacturerID rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf owl:topDataProperty ;
-                rdfs:comment "The wikidata ID of a manufacturer"@en .
+                rdfs:comment "The wikidata ID of a manufacturer"@en ;
+                skos:prefLabel "manufacturer ID"@en .
 
 
 ###  https://w3cid.org/entente#massFraction
 :massFraction rdf:type owl:DatatypeProperty ;
-              rdfs:subPropertyOf owl:topDataProperty .
+              rdfs:subPropertyOf :compositionData ,
+                                 <https://w3id.org/emmo/elite#dataValue> ;
+              rdfs:domain :SingleComponentComposition ;
+              skos:prefLabel "mass fraction"@en .
+
+
+###  https://w3cid.org/entente#materialSpecification
+:materialSpecification rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf :materialsData ;
+                       rdfs:domain :StainlessSteel ;
+                       rdfs:range xsd:string ;
+                       rdfs:comment "A name specifying the material type following a standard nomenclature. The enumeration of possible values is managed by the ENTENTE interface."@en ;
+                       skos:prefLabel "material specification"@en .
 
 
 ###  https://w3cid.org/entente#materialsData
 :materialsData rdf:type owl:DatatypeProperty ;
-               rdfs:domain :StainlessSteel .
-
-
-###  https://w3cid.org/entente#materialsSpecifications
-:materialsSpecifications rdf:type owl:DatatypeProperty ;
-                         rdfs:subPropertyOf :materialsData ;
-                         rdfs:range xsd:string ;
-                         rdfs:comment "A name specifying the material type following a standard nomenclature. The enumeration of possible values are managed by the ENTENTE interface."@en .
+               rdfs:domain :StainlessSteel ;
+               skos:prefLabel "materials data"@en .
 
 
 ###  https://w3cid.org/entente#microstructureType
 :microstructureType rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf :materialsData ;
                     rdfs:range xsd:string ;
-                    rdfs:comment "The microstructure type expressed as one of these values: 'ferrite', 'cementite', 'austenite', 'pearlite', 'upper bainite', 'lower bainite', 'martensite'. The enumeration of possible values is managed by the ENTENTE interface."@en .
+                    rdfs:comment "The microstructure type expressed as one of these values: 'ferrite', 'cementite', 'austenite', 'pearlite', 'upper bainite', 'lower bainite', 'martensite'. The enumeration of possible values is managed by the ENTENTE interface."@en ;
+                    skos:prefLabel "microstructure type"@en .
 
 
 ###  https://w3cid.org/entente#productForm
 :productForm rdf:type owl:DatatypeProperty ;
-             rdfs:subPropertyOf owl:topDataProperty ;
-             rdfs:comment "The form of the product whose material is tested. The enumeration of possible values are managed by the ENTENTE interface."@en .
+             rdfs:subPropertyOf :materialsData ;
+             rdfs:comment "The form of the product whose material is tested. The enumeration of possible values are managed by the ENTENTE interface."@en ;
+             skos:prefLabel "product form"@en .
+
+
+###  https://w3cid.org/entente#quenchMethod
+:quenchMethod rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :heatTreatmentData ;
+              rdfs:domain :HeatTreatment ;
+              rdfs:range xsd:string ;
+              rdfs:comment "The quenching method applied after a heat treatment step (e.g. WQ, AC, FC, BQ). The enumeration of possible values is managed by the ENTENTE interface."@en ;
+              skos:prefLabel "quench method"@en .
+
+
+###  https://w3cid.org/entente#reactorType
+:reactorType rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :irradiationFacilityData ;
+             rdfs:domain :IrradiationFacility ;
+             rdfs:range xsd:string ;
+             rdfs:comment "The reactor type (e.g. PWR, BWR, MTR)."@en ;
+             skos:prefLabel "reactor type"@en .
+
+
+###  https://w3cid.org/entente#referenceDepth
+:referenceDepth rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :irradiationSetData ;
+                rdfs:domain :IrradiationSet ;
+                rdfs:range xsd:string ;
+                rdfs:comment "The reference depth within the vessel wall at which fluence/dose values are reported."@en ;
+                skos:prefLabel "reference depth"@en .
 
 
 ###  https://w3cid.org/entente#runNumber
 :runNumber rdf:type owl:DatatypeProperty ;
-           rdfs:subPropertyOf :heatTreatmentData .
+           rdfs:subPropertyOf :heatTreatmentData ;
+           skos:prefLabel "run number"@en .
 
 
 ###  https://w3cid.org/entente#speciesName
 :speciesName rdf:type owl:DatatypeProperty ;
-             rdfs:subPropertyOf owl:topDataProperty .
+             rdfs:subPropertyOf :compositionData ;
+             rdfs:domain :SingleComponentComposition ;
+             skos:prefLabel "species name"@en .
+
+
+###  https://w3cid.org/entente#vesselManufacturer
+:vesselManufacturer rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf :irradiationFacilityData ;
+                    rdfs:domain :IrradiationFacility ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "The organisation that manufactured the reactor pressure vessel."@en ;
+                    skos:prefLabel "vessel manufacturer"@en .
+
+
+###  https://w3cid.org/entente#withdrawDate
+:withdrawDate rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :irradiationSetData ;
+              rdfs:domain :IrradiationSet ;
+              rdfs:range xsd:date ;
+              rdfs:comment "The date on which the specimens were withdrawn from the irradiation facility."@en ;
+              skos:prefLabel "withdraw date"@en .
 
 
 #################################################################
 #    Classes
 #################################################################
 
+###  http://purl.org/dc/dcmitype/Text
+dcmitype:Text rdf:type owl:Class ;
+              rdfs:subClassOf <https://w3id.org/emmo/hume#Data> .
+
+
+###  http://purl.org/dc/terms/BibliographicResource
+<http://purl.org/dc/terms/BibliographicResource> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <https://w3id.org/emmo/hume#Data> .
+
+
+###  https://w3cid.org/entente#AirCooling
+:AirCooling rdf:type owl:Class ;
+            rdfs:subClassOf :QuenchMethod ;
+            rdfs:comment "A quenching method in which the material is cooled in still or forced air after a heat treatment step."@en ;
+            skos:prefLabel "Air Cooling (AC)"@en .
+
+
+###  https://w3cid.org/entente#Austenite
+:Austenite rdf:type owl:Class ;
+           rdfs:subClassOf :Microstructure ;
+           rdfs:comment "A face-centred cubic (FCC) iron phase, typically stable at elevated temperatures, that can be retained or transformed during cooling."@en ;
+           skos:prefLabel "Austenite"@en .
+
+
 ###  https://w3cid.org/entente#Austenitizing
 :Austenitizing rdf:type owl:Class ;
-               rdfs:subClassOf :HeatTreatment .
+               rdfs:subClassOf :HeatTreatment ;
+               rdfs:comment "A heat treatment step in which the steel is held above the upper critical temperature (Ac3) to produce a fully austenitic microstructure before quenching."@en ;
+               skos:prefLabel "Austenitizing"@en .
+
+
+###  https://w3cid.org/entente#BWR
+:BWR rdf:type owl:Class ;
+     rdfs:subClassOf :NuclearReactor ;
+     rdfs:comment "A boiling water reactor (BWR) nuclear power plant used as an irradiation facility."@en ;
+     skos:prefLabel "Boiling Water Reactor (BWR)"@en .
+
+
+###  https://w3cid.org/entente#BrineQuench
+:BrineQuench rdf:type owl:Class ;
+             rdfs:subClassOf :QuenchMethod ;
+             rdfs:comment "A quenching method in which the material is rapidly cooled by immersion in a brine (salt-water) solution."@en ;
+             skos:prefLabel "Brine Quench (BQ)"@en .
+
+
+###  https://w3cid.org/entente#Cementite
+:Cementite rdf:type owl:Class ;
+           rdfs:subClassOf :Microstructure ;
+           rdfs:comment "An iron carbide phase (Fe3C) that forms part of the microstructure of steels, particularly in pearlite or as a separate constituent."@en ;
+           skos:prefLabel "Cementite"@en .
+
+
+###  https://w3cid.org/entente#CharpyImpactSpecimen
+:CharpyImpactSpecimen rdf:type owl:Class ;
+                      rdfs:subClassOf :Specimen ;
+                      rdfs:comment "A notched bar specimen used in a Charpy impact test to measure the energy absorbed during fracture."@en ;
+                      skos:prefLabel "Charpy Impact Specimen"@en .
+
+
+###  https://w3cid.org/entente#Charpy_U_Notch
+:Charpy_U_Notch rdf:type owl:Class ;
+                rdfs:subClassOf :CharpyImpactSpecimen ;
+                rdfs:comment "A Charpy impact specimen with a U-shaped notch (ISO 148-1 type U)."@en ;
+                skos:prefLabel "Charpy U-Notch"@en .
+
+
+###  https://w3cid.org/entente#Charpy_V_Notch
+:Charpy_V_Notch rdf:type owl:Class ;
+                rdfs:subClassOf :CharpyImpactSpecimen ;
+                rdfs:comment "A Charpy impact specimen with a V-shaped notch (ISO 148-1 / ASTM E23 standard geometry)."@en ;
+                skos:prefLabel "Charpy V-Notch"@en .
+
+
+###  https://w3cid.org/entente#Citation
+:Citation rdf:type owl:Class ;
+          rdfs:subClassOf dcmitype:Text ,
+                          <http://purl.org/dc/terms/BibliographicResource> ;
+          rdfs:comment "A bibliographic reference to a publication (journal article, conference paper, report, etc.) associated with ENTENTE data."@en ;
+          skos:prefLabel "Citation"@en .
+
+
+###  https://w3cid.org/entente#CompactTension_CT
+:CompactTension_CT rdf:type owl:Class ;
+                   rdfs:subClassOf :FractureToughness ;
+                   rdfs:comment "A compact tension (CT) specimen geometry used to measure fracture toughness (KIc, JIc) according to ASTM E399 / E1820."@en ;
+                   skos:prefLabel "Compact Tension (CT)"@en .
 
 
 ###  https://w3cid.org/entente#Duration
 :Duration rdf:type owl:Class ;
           rdfs:subClassOf <https://w3id.org/emmo/hume#Property> ;
-          <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_0adabf6f_7404_44cb_9f65_32d83d8101a3> .
+          rdfs:comment "The elapsed time associated with a process or treatment step."@en ;
+          skos:exactMatch <https://w3id.org/emmo#EMMO_0adabf6f_7404_44cb_9f65_32d83d8101a3> ;
+          skos:prefLabel "Duration"@en .
+
+
+###  https://w3cid.org/entente#ElectronIrradiation
+:ElectronIrradiation rdf:type owl:Class ;
+                     rdfs:subClassOf :IrradiationSource ;
+                     rdfs:comment "An irradiation process using accelerated electrons as the damaging particle source."@en ;
+                     skos:prefLabel "Electron Irradiation"@en .
+
+
+###  https://w3cid.org/entente#Ferrite
+:Ferrite rdf:type owl:Class ;
+         rdfs:subClassOf :Microstructure ;
+         rdfs:comment "A body-centred cubic (BCC) iron phase that is the primary constituent of low-alloy ferritic steels at room temperature."@en ;
+         skos:prefLabel "Ferrite"@en .
+
+
+###  https://w3cid.org/entente#Forging
+:Forging rdf:type owl:Class ;
+         rdfs:subClassOf :ProductForm ;
+         rdfs:comment "A product form produced by plastic deformation of metal under compressive force; typically a thick section with directional grain flow."@en ;
+         skos:prefLabel "Forging"@en .
+
+
+###  https://w3cid.org/entente#FractureToughness
+:FractureToughness rdf:type owl:Class ;
+                   rdfs:subClassOf <https://w3id.org/emmo/hume#Characterisation> ;
+                   rdfs:comment "A characterisation technique that quantifies the resistance of a material to crack propagation, yielding parameters such as KIc or JIc."@en ;
+                   skos:prefLabel "Fracture Toughness"@en .
+
+
+###  https://w3cid.org/entente#FractureToughnessSpecimen
+:FractureToughnessSpecimen rdf:type owl:Class ;
+                           rdfs:subClassOf :Specimen ;
+                           rdfs:comment "A specimen geometry designed and machined for fracture toughness testing."@en ;
+                           skos:prefLabel "Fracture Toughness Specimen"@en .
+
+
+###  https://w3cid.org/entente#FurnaceCooling
+:FurnaceCooling rdf:type owl:Class ;
+                rdfs:subClassOf :QuenchMethod ;
+                rdfs:comment "A quenching method in which the material is cooled slowly inside the furnace, approximating equilibrium cooling conditions."@en ;
+                skos:prefLabel "Furnace Cooling (FC)"@en .
+
+
+###  https://w3cid.org/entente#HAZ
+:HAZ rdf:type owl:Class ;
+     rdfs:subClassOf :ProductForm ;
+     rdfs:comment "The heat-affected zone (HAZ) of a weld: the region of base metal adjacent to the weld fusion boundary that has been thermally altered without melting."@en ;
+     skos:prefLabel "Heat-Affected Zone (HAZ)"@en .
 
 
 ###  https://w3cid.org/entente#HeatTreatment
 :HeatTreatment rdf:type owl:Class ;
-               rdfs:subClassOf <https://w3id.org/emmo/hume#Process> .
+               rdfs:subClassOf <https://w3id.org/emmo/hume#Process> ;
+               rdfs:comment "A controlled thermal process (e.g. austenitizing, tempering, stress relief, normalizing) applied to a material to modify its microstructure and mechanical properties."@en ;
+               skos:prefLabel "Heat Treatment"@en .
+
+
+###  https://w3cid.org/entente#IonIrradiation
+:IonIrradiation rdf:type owl:Class ;
+                rdfs:subClassOf :IrradiationSource ;
+                rdfs:comment "An irradiation process using accelerated heavy ions (e.g. Fe²⁺, Ni²⁺) as the damaging particle source, typically performed in an ion accelerator."@en ;
+                skos:prefLabel "Ion Irradiation"@en .
+
+
+###  https://w3cid.org/entente#IonIrradiationFacility
+:IonIrradiationFacility rdf:type owl:Class ;
+                        rdfs:subClassOf :IrradiationFacility ;
+                        rdfs:comment "An irradiation facility based on an ion accelerator, used to simulate neutron damage by bombarding specimens with energetic ions."@en ;
+                        skos:prefLabel "Ion Irradiation Facility"@en .
+
+
+###  https://w3cid.org/entente#IrradiationFacility
+:IrradiationFacility rdf:type owl:Class ;
+                     rdfs:subClassOf <https://w3id.org/emmo/hume#System> ;
+                     rdfs:comment "A facility (nuclear reactor, accelerator, or other installation) in which specimens are irradiated to study radiation-induced effects on materials."@en ;
+                     skos:prefLabel "Irradiation Facility"@en .
+
+
+###  https://w3cid.org/entente#IrradiationProcess
+:IrradiationProcess rdf:type owl:Class ;
+                    rdfs:subClassOf <https://w3id.org/emmo/hume#Process> ;
+                    rdfs:comment "A process in which material specimens are exposed to a particle flux (neutrons, ions, electrons, protons) to induce radiation damage."@en ;
+                    skos:prefLabel "Irradiation Process"@en .
+
+
+###  https://w3cid.org/entente#IrradiationSet
+:IrradiationSet rdf:type owl:Class ;
+                rdfs:subClassOf <https://w3id.org/emmo/hume#Process> ;
+                rdfs:comment "A set of specimens irradiated together under the same conditions in an irradiation facility, characterised by a common flux, fluence, dose, and irradiation period."@en ;
+                skos:prefLabel "Irradiation Set"@en .
+
+
+###  https://w3cid.org/entente#IrradiationSource
+:IrradiationSource rdf:type owl:Class ;
+                   rdfs:subClassOf :IrradiationProcess ;
+                   rdfs:comment "The specific type of particle source used in an irradiation process (neutrons, ions, electrons, protons, etc.)."@en ;
+                   skos:prefLabel "Irradiation Source"@en .
+
+
+###  https://w3cid.org/entente#LowerBainite
+:LowerBainite rdf:type owl:Class ;
+              rdfs:subClassOf :Microstructure ;
+              rdfs:comment "A bainitic microstructural constituent formed at lower transformation temperatures, characterised by fine cementite precipitates within bainitic ferrite laths."@en ;
+              skos:prefLabel "Lower Bainite"@en .
+
+
+###  https://w3cid.org/entente#MTR
+:MTR rdf:type owl:Class ;
+     rdfs:subClassOf :NuclearReactor ;
+     rdfs:comment "A materials testing reactor (MTR): a research reactor designed to provide high neutron flux for irradiation experiments on structural materials."@en ;
+     skos:prefLabel "Material Testing Reactor (MTR)"@en .
 
 
 ###  https://w3cid.org/entente#Manufacturer
 :Manufacturer rdf:type owl:Class ;
               rdfs:subClassOf <https://w3id.org/emmo/hume#Agent> ;
-              <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_c0afb341_7d31_4883_a307_ae4606df2a1b> .
+              rdfs:comment "An organisation that produced or supplied the steel material or reactor pressure vessel under study."@en ;
+              skos:exactMatch <https://w3id.org/emmo#EMMO_c0afb341_7d31_4883_a307_ae4606df2a1b> ;
+              skos:prefLabel "Manufacturer"@en .
+
+
+###  https://w3cid.org/entente#Martensite
+:Martensite rdf:type owl:Class ;
+            rdfs:subClassOf :Microstructure ;
+            rdfs:comment "A hard, body-centred tetragonal (BCT) phase formed by diffusionless transformation of austenite during rapid quenching."@en ;
+            skos:prefLabel "Martensite"@en .
+
+
+###  https://w3cid.org/entente#Microstructure
+:Microstructure rdf:type owl:Class ;
+                rdfs:subClassOf <https://w3id.org/emmo/hume#Material> ;
+                rdfs:comment "The structural features of a material observable at the microscopic scale, including phases, grains, and their morphology."@en ;
+                skos:prefLabel "Microstructure"@en .
+
+
+###  https://w3cid.org/entente#ModelAlloy
+:ModelAlloy rdf:type owl:Class ;
+            rdfs:subClassOf :ProductForm ;
+            rdfs:comment "A simplified alloy of controlled composition used as a laboratory model to isolate and study the effect of specific alloying elements on irradiation behaviour."@en ;
+            skos:prefLabel "Model Alloy"@en .
+
+
+###  https://w3cid.org/entente#NeutronIrradiation
+:NeutronIrradiation rdf:type owl:Class ;
+                    rdfs:subClassOf :IrradiationSource ;
+                    rdfs:comment "An irradiation process in which specimens are exposed to a neutron flux, producing atomic displacement damage representative of in-service reactor conditions."@en ;
+                    skos:prefLabel "Neutron Irradiation"@en .
 
 
 ###  https://w3cid.org/entente#Normalizing
 :Normalizing rdf:type owl:Class ;
-             rdfs:subClassOf :HeatTreatment .
+             rdfs:subClassOf :HeatTreatment ;
+             rdfs:comment "A heat treatment step in which the steel is austenitized and then air-cooled to produce a uniform, fine-grained ferritic-pearlitic microstructure."@en ;
+             skos:prefLabel "Normalizing"@en .
+
+
+###  https://w3cid.org/entente#NuclearReactor
+:NuclearReactor rdf:type owl:Class ;
+                rdfs:subClassOf :IrradiationFacility ;
+                rdfs:comment "A nuclear fission reactor used as an irradiation facility to expose material specimens to neutron flux."@en ;
+                skos:prefLabel "Nuclear Reactor"@en .
+
+
+###  https://w3cid.org/entente#OperatingReactor
+:OperatingReactor rdf:type owl:Class ;
+                  rdfs:subClassOf :IrradiationFacility ;
+                  rdfs:comment "A commercial nuclear power plant whose surveillance capsules provide irradiated specimens representative of actual in-service conditions."@en ;
+                  skos:prefLabel "Operating Reactor"@en .
+
+
+###  https://w3cid.org/entente#PWR
+:PWR rdf:type owl:Class ;
+     rdfs:subClassOf :NuclearReactor ;
+     rdfs:comment "A pressurized water reactor (PWR) nuclear power plant used as an irradiation facility."@en ;
+     skos:prefLabel "Pressurized Water Reactor (PWR)"@en .
+
+
+###  https://w3cid.org/entente#Pearlite
+:Pearlite rdf:type owl:Class ;
+          rdfs:subClassOf :Microstructure ;
+          rdfs:comment "A lamellar microstructural constituent consisting of alternating plates of ferrite and cementite, formed by the eutectoid transformation of austenite."@en ;
+          skos:prefLabel "Pearlite"@en .
+
+
+###  https://w3cid.org/entente#Plate
+:Plate rdf:type owl:Class ;
+       rdfs:subClassOf :ProductForm ;
+       rdfs:comment "A flat-rolled or rolled product form with thickness typically greater than 6 mm; a common starting form for reactor pressure vessel steel."@en ;
+       skos:prefLabel "Plate"@en .
 
 
 ###  https://w3cid.org/entente#PostWeldStressRelieving
 :PostWeldStressRelieving rdf:type owl:Class ;
-                         rdfs:subClassOf :HeatTreatment .
+                         rdfs:subClassOf :HeatTreatment ;
+                         rdfs:comment "A post-weld heat treatment (PWHT) step performed to reduce residual stresses introduced by welding."@en ;
+                         skos:prefLabel "Post-Weld Stress Relieving"@en .
 
 
 ###  https://w3cid.org/entente#PostWeldment
 :PostWeldment rdf:type owl:Class ;
-              rdfs:subClassOf :HeatTreatment .
+              rdfs:subClassOf :HeatTreatment ;
+              rdfs:comment "A heat treatment applied to an assembly after welding, intended to relieve residual stresses and improve toughness of the weld and HAZ."@en ;
+              skos:prefLabel "Post Weldment"@en .
+
+
+###  https://w3cid.org/entente#ProductForm
+:ProductForm rdf:type owl:Class ;
+             rdfs:subClassOf <https://w3id.org/emmo/hume#Object> ;
+             rdfs:comment "The physical form (geometry and manufacturing route) of the steel product from which a specimen was taken (e.g. plate, forging, weld, HAZ)."@en ;
+             skos:prefLabel "Product Form"@en .
+
+
+###  https://w3cid.org/entente#Project
+:Project rdf:type owl:Class ;
+         rdfs:subClassOf <https://w3id.org/emmo/hume#Process> ;
+         rdfs:comment "A research or industrial project within whose scope ENTENTE data were collected or used."@en ;
+         skos:prefLabel "Project"@en .
+
+
+###  https://w3cid.org/entente#ProtonIrradiation
+:ProtonIrradiation rdf:type owl:Class ;
+                   rdfs:subClassOf :IrradiationSource ;
+                   rdfs:comment "An irradiation process using accelerated protons as the damaging particle source, typically performed in a cyclotron or tandem accelerator."@en ;
+                   skos:prefLabel "Proton Irradiation"@en .
+
+
+###  https://w3cid.org/entente#QuenchMethod
+:QuenchMethod rdf:type owl:Class ;
+              rdfs:subClassOf <https://w3id.org/emmo/hume#Process> ;
+              rdfs:comment "The method used to cool the material from an elevated temperature after a heat treatment step (e.g. water quench, air cooling, furnace cooling)."@en ;
+              skos:prefLabel "Quench Method"@en .
+
+
+###  https://w3cid.org/entente#ResearchReactor
+:ResearchReactor rdf:type owl:Class ;
+                 rdfs:subClassOf :IrradiationFacility ;
+                 rdfs:comment "A nuclear reactor operated primarily for research and material testing purposes rather than for electricity generation."@en ;
+                 skos:prefLabel "Research Reactor"@en .
+
+
+###  https://w3cid.org/entente#SRM
+:SRM rdf:type owl:Class ;
+     rdfs:subClassOf :ProductForm ;
+     rdfs:comment "A standard reference material (SRM): a certified material with known composition and properties, used to calibrate or validate measurement procedures."@en ;
+     skos:prefLabel "Standard Reference Material (SRM)"@en .
 
 
 ###  https://w3cid.org/entente#SingleComponentComposition
 :SingleComponentComposition rdf:type owl:Class ;
                             rdfs:subClassOf <https://w3id.org/emmo/hume#Property> ;
-                            <http://www.w3.org/2004/02/skos/core#exactMatch> <https://w3id.org/emmo#EMMO_172e2c96_180b_40f8_a3e7_b624471f40c2> .
+                            rdfs:comment "The mass fraction of a single chemical element within the overall composition of a steel alloy."@en ;
+                            skos:exactMatch <https://w3id.org/emmo#EMMO_172e2c96_180b_40f8_a3e7_b624471f40c2> ;
+                            skos:prefLabel "Single Component Composition"@en .
+
+
+###  https://w3cid.org/entente#Specimen
+:Specimen rdf:type owl:Class ;
+          rdfs:subClassOf <https://w3id.org/emmo/hume#Component> ;
+          rdfs:comment "A piece of material machined to a specific geometry for mechanical, fracture, or microstructural testing."@en ;
+          skos:prefLabel "Specimen"@en .
 
 
 ###  https://w3cid.org/entente#StainlessSteel
 :StainlessSteel rdf:type owl:Class ;
-                rdfs:subClassOf <https://w3id.org/emmo/hume#Material> .
+                rdfs:subClassOf <https://w3id.org/emmo/hume#Material> ;
+                rdfs:comment "A low-alloy or stainless steel material whose chemical composition, microstructure, and mechanical properties are characterised in the ENTENTE database."@en ;
+                skos:prefLabel "Stainless Steel"@en .
+
+
+###  https://w3cid.org/entente#Steel_15Kh2MFA
+:Steel_15Kh2MFA rdf:type owl:Class ;
+                rdfs:subClassOf :StainlessSteel ;
+                rdfs:comment "A Russian-grade Cr-Mo-V low-alloy reactor pressure vessel steel (15Kh2MFA), commonly used in VVER reactors."@en ;
+                skos:prefLabel "Steel 15Kh2MFA"@en .
+
+
+###  https://w3cid.org/entente#Steel_16MND5
+:Steel_16MND5 rdf:type owl:Class ;
+              rdfs:subClassOf :StainlessSteel ;
+              rdfs:comment "A French-grade Mn-Ni-Mo low-alloy reactor pressure vessel steel (16MND5), used in PWR reactors of French design."@en ;
+              skos:prefLabel "Steel 16MND5"@en .
+
+
+###  https://w3cid.org/entente#Steel_A302B
+:Steel_A302B rdf:type owl:Class ;
+             rdfs:subClassOf :StainlessSteel ;
+             rdfs:comment "An ASME SA-302 Grade B Mn-Mo low-alloy steel plate used in older reactor pressure vessel construction."@en ;
+             skos:prefLabel "Steel A302B"@en .
+
+
+###  https://w3cid.org/entente#Steel_A533B1
+:Steel_A533B1 rdf:type owl:Class ;
+              rdfs:subClassOf :StainlessSteel ;
+              rdfs:comment "An ASME SA-533 Type B Class 1 Mn-Mo-Ni low-alloy steel, the primary plate material for US-designed PWR and BWR pressure vessels."@en ;
+              skos:prefLabel "Steel A533B1"@en .
 
 
 ###  https://w3cid.org/entente#StressRelief
 :StressRelief rdf:type owl:Class ;
-              rdfs:subClassOf :HeatTreatment .
+              rdfs:subClassOf :HeatTreatment ;
+              rdfs:comment "A heat treatment step performed below the transformation temperature to reduce internal residual stresses without significantly altering the microstructure."@en ;
+              skos:prefLabel "Stress Relief"@en .
+
+
+###  https://w3cid.org/entente#TEMSpecimen
+:TEMSpecimen rdf:type owl:Class ;
+             rdfs:subClassOf :Specimen ;
+             rdfs:comment "A thin-foil or small disc specimen prepared for observation in a transmission electron microscope (TEM)."@en ;
+             skos:prefLabel "TEM Specimen"@en .
 
 
 ###  https://w3cid.org/entente#Tempering
 :Tempering rdf:type owl:Class ;
-           rdfs:subClassOf :HeatTreatment .
+           rdfs:subClassOf :HeatTreatment ;
+           rdfs:comment "A heat treatment step performed after quenching, in which the steel is reheated to an intermediate temperature to reduce hardness and improve toughness."@en ;
+           skos:prefLabel "Tempering"@en .
+
+
+###  https://w3cid.org/entente#TensileSpecimen
+:TensileSpecimen rdf:type owl:Class ;
+                 rdfs:subClassOf :Specimen ;
+                 rdfs:comment "A specimen machined to a standardised geometry for uniaxial tensile testing to determine yield strength, ultimate tensile strength, and ductility."@en ;
+                 skos:prefLabel "Tensile Specimen"@en .
+
+
+###  https://w3cid.org/entente#ThermalIrradiation
+:ThermalIrradiation rdf:type owl:Class ;
+                    rdfs:subClassOf :IrradiationSource ;
+                    rdfs:comment "An irradiation process using a thermal (low-energy) neutron spectrum, in which neutron capture reactions can be significant in addition to displacement damage."@en ;
+                    skos:prefLabel "Thermal Neutron Irradiation"@en .
+
+
+###  https://w3cid.org/entente#UpperBainite
+:UpperBainite rdf:type owl:Class ;
+              rdfs:subClassOf :Microstructure ;
+              rdfs:comment "A bainitic microstructural constituent formed at higher transformation temperatures, characterised by sheaves of bainitic ferrite with carbides precipitated between the laths."@en ;
+              skos:prefLabel "Upper Bainite"@en .
+
+
+###  https://w3cid.org/entente#WaterQuench
+:WaterQuench rdf:type owl:Class ;
+             rdfs:subClassOf :QuenchMethod ;
+             rdfs:comment "A quenching method in which the material is rapidly cooled by immersion in water, producing high cooling rates."@en ;
+             skos:prefLabel "Water Quench (WQ)"@en .
+
+
+###  https://w3cid.org/entente#WedgeOpeningLoading_WOL
+:WedgeOpeningLoading_WOL rdf:type owl:Class ;
+                         rdfs:subClassOf :FractureToughness ;
+                         rdfs:comment "A wedge opening loading (WOL) specimen: a modified compact tension geometry loaded by a wedge, used for sustained-load fracture toughness and stress corrosion tests."@en ;
+                         skos:prefLabel "Wedge Opening Loading (WOL)"@en .
+
+
+###  https://w3cid.org/entente#Weld
+:Weld rdf:type owl:Class ;
+      rdfs:subClassOf :ProductForm ;
+      rdfs:comment "A product form consisting of the deposited weld metal joining two base-metal sections; specimens taken from this region represent weld-metal properties."@en ;
+      skos:prefLabel "Weld"@en .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
